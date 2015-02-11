@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb 05 20:44:14 2015
+
+@author: Khanfor
+"""
+# Importing the system package to use it to exit the script
+import sys
+
+# Open the file using open function
+file = open("KhanforAbdullahH1SSW555.ged", "r")
+
+# Print the name of the file
+print file.name
+
+fname = file.name
+
+# Reading each line
+with open(fname) as f:
+    content = file.readlines()
+# Get read of \n that indicate a new line in the GED file
+content = [x.strip('\n') for x in content]
+
+# Now we split each element and put in a list 
+seprated_content = [x.split() for x in content]
+
+# BEGINING In the following part we take the family and indivdial in different lists to check that not excessding 5000 person and 1000 families
+fam_ind = [l[1] for l in seprated_content if l[1][0] == '@']
+
+no_fam_ind = [x.strip('@') for x in fam_ind]
+
+ind = [s for s in no_fam_ind if "I" in s]
+
+fam = [s for s in no_fam_ind if "F" in s]
+
+if len(ind) <= 5000:
+    if len(fam) <= 1000:
+        
+        #BEGIN OF Printing names and ID 
+        
+        #Getting first Names
+        first_names = [l[2] for l in seprated_content if l[1] == 'NAME']
+        first_names.pop(0)
+        
+        #Getting last Names
+        last_names = [l[2] for l in seprated_content if l[1] == 'SURN']
+        
+        count = 0
+        while (count < len(first_names)):
+           print ind[count], first_names[count], last_names[count]
+           count = count + 1
+        #END OF Printing names and ID
+        
+        #BEGIN OF find husbend and wife print        
+        
+        hus_list = [l[2] for l in seprated_content if l[1] == 'HUSB']
+        hus_list = [x.strip('@') for x in hus_list]
+        hus_list = [x.strip('I') for x in hus_list]
+        
+        wife_list = [l[2] for l in seprated_content if l[1] == 'WIFE']
+        wife_list = [x.strip('@') for x in wife_list]
+        wife_list = [x.strip('I') for x in wife_list]
+        
+        print ' '
+        mcount = 0
+        while (mcount < len(hus_list)):
+            value_h = int(hus_list[mcount]) - 1
+            value_w = int(wife_list[mcount]) - 1
+            print 'Husband: ', first_names[value_h], last_names[value_h]
+            print 'Wife: ', first_names[value_w], last_names[value_w]
+            print ' '
+            mcount = mcount + 1
+        #END OF find husbend and wife print           
+        
+    else:
+        sys.exit("The families have excessed 1000! :-/")
+else:
+    sys.exit("The individuals have excessed 5000! :-/")
+# ENDING of checking how many families and indiduals
