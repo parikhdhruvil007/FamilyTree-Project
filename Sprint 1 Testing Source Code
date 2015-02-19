@@ -121,3 +121,30 @@ public class ChildTest {
 	}
 
 }
+USER STORY 5
+package test;
+
+public class Junit {
+	
+	public String married(int married_date, int remarried_date)
+	{
+		if(remarried_date < married_date)
+			return "NOT Acceptable";
+		else
+			return "Acceptable";
+	}
+	
+}
+package test;
+import static org.junit.Assert.*;
+import org.junit.Test;
+public class CompareTest {
+	@Test 5
+	public void test() {
+		Junit test = new Junit();
+		String result = test.married(2013, 2014);
+		assertEquals("NOT Acceptable",result);
+	}
+
+}
+
