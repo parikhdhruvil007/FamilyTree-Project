@@ -1,1 +1,123 @@
-@Test1
+USER STORY 1
+package UserStory1;
+
+public class Junit {
+
+public String compare(int Death_date, int Marriage_date) {
+	// TODO Auto-generated method stub
+	if (Death_date > Marriage_date)
+		return ("Not Acceptable");
+	else
+	return ("Acceptable");
+}
+
+}
+package UserStory1;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CompareTest {
+
+	@Test1
+	public void test() {
+		Junit test = new Junit();
+		String result = test.compare(20130202,20110212);
+		assertEquals ("Not Acceptable",result);
+		
+	}
+
+}
+
+USER STORY 2
+package userStory2;
+
+public class Junit {
+	public String checking(int Birth_date,int Death_date)
+	{
+		if(Birth_date > Death_date)
+			return ("Not Acceptable");
+		else
+			return ("Acceptable");
+	}
+
+}
+
+
+package userStory2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CheckingTest {
+
+	@Test2
+	public void test() {
+		Junit test = new Junit();
+		String result = test.checking(19931201,19921201);
+		assertEquals("Not Acceptable",result);
+	}
+
+}
+USER STORY 3
+package UserStory3;
+
+public class Junit {
+public String Date(int Birth_date, int Marriage_date)
+{
+	if (Birth_date > Marriage_date)
+		return ("Not Acceptable");
+	else
+		return ("Acceptable");
+
+}
+}
+
+
+package UserStory3;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class US03Test {
+
+	@Test3
+	public void test() {
+		Junit test = new Junit();
+		String result = test.Date(20151007, 20141007);
+		assertEquals("Acceptable", result);
+	}
+
+}
+USER STORY 4
+package UserStory04;
+
+public class Junit {
+public String NoOfChildren (int Children)
+{
+	if (Children >= 25)
+		return ("Not Acceptable");
+	else
+		return ("Acceptable");
+}
+}
+
+package UserStory04;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ChildTest {
+
+	@Test4
+	public void test() {
+		Junit test = new Junit();
+		String result = test.NoOfChildren(10);
+		assertEquals("Not Acceptable",result);
+	}
+
+}
