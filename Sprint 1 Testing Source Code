@@ -1,150 +1,144 @@
-USER STORY 1
-package UserStory1;
+USER STORY 1: Death Before Birth
+package UserStory1; 
 
-public class Junit {
+from  filereader import OpenFile
 
-public String compare(int Death_date, int Marriage_date) {
-	// TODO Auto-generated method stub
-	if (Death_date > Marriage_date)
-		return ("Not Acceptable");
-	else
-	return ("Acceptable");
-}
+flat_content = OpenFile.flat_content
 
-}
-package UserStory1;
+class DeathBeforeBirth:
+    
+    Birthday = []
+    Deathday = []
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'BIRT']: 
+        Birthday.append(flat_content[i+5])
+        
+        if(flat_content[i+7] == 'DEAT'):
+            Deathday.append(flat_content[i+13])
+        else:
+            Deathday.append('LIVE')
+        
+    count = 0          
+    while (count < len(Birthday)):
+        if(Birthday[count] > Deathday[count]):
+            print "Birth can't be after death"
+        elif(Deathday[count] == 'LIVE'):
+            print "Still Alive"
+        else:
+            print "Birth is before death"
+        count = count + 1
+    print Birthday
+    print Deathday
+     
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-public class CompareTest {
-
-	@Test1
-	public void test() {
-		Junit test = new Junit();
-		String result = test.compare(20130202,20110212);
-		assertEquals ("Not Acceptable",result);
-		
-	}
-
-}
-
-USER STORY 2
+USER STORY 2: Divorce Before Marriage
 package userStory2;
 
-public class Junit {
-	public String checking(int Birth_date,int Death_date)
-	{
-		if(Birth_date > Death_date)
-			return ("Not Acceptable");
-		else
-			return ("Acceptable");
-	}
+from filereader import OpenFile
 
-}
+flat_content = OpenFile.flat_content
 
-
-package userStory2;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-public class CheckingTest {
-
-	@Test2
-	public void test() {
-		Junit test = new Junit();
-		String result = test.checking(19931201,19921201);
-		assertEquals("Not Acceptable",result);
-	}
-
-}
-USER STORY 3
+class DivorceBeforeMarriage:
+    
+    Divorceday = []
+    Marriageday = []
+    #find marriage dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'MARR']: 
+        Marriageday.append(flat_content[i+5])
+        #if there is divorce print divorce dates
+        if(flat_content[i+7] == 'DIV'):
+            Divorceday.append(flat_content[i+12])
+        else:
+            Divorceday.append('MARRIED')
+      
+    count = 0          
+   while (count < len(Divorceday)):
+        if(Divorceday[count] < Marriageday[count]):
+            print "Divorce can't be before Marriage"
+        elif(Divorceday[count] == 'MARRIED'):
+            print "Still Married"
+        else:
+            print "Divorce is after Marriage"
+        count = count + 1
+    
+print DivorceBeforeMarriage.Marriageday
+print DivorceBeforeMarriage.Divorceday
+     
+        
+USER STORY 3: Death in Future
 package UserStory3;
 
-public class Junit {
-public String Date(int Birth_date, int Marriage_date)
-{
-	if (Birth_date > Marriage_date)
-		return ("Not Acceptable");
-	else
-		return ("Acceptable");
+import time
 
-}
-}
+from filereader import OpenFile
+
+flat_content = OpenFile.flat_content
+
+class DeathinFuture:
+    
+    Deathday = []
+    #find marriage dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'DEAT']: 
+        Deathday.append(flat_content[i+6])
+        #if there is divorce print divorce dates
+        if(flat_content[i+6] >= time.strftime("%Y")):
+            print "Death can't be predicted in future"
+        else:
+            print "Death was in past"
+print DeathinFuture.Deathday
 
 
-package UserStory3;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-public class US03Test {
-
-	@Test3
-	public void test() {
-		Junit test = new Junit();
-		String result = test.Date(20151007, 20141007);
-		assertEquals("Acceptable", result);
-	}
-
-}
-USER STORY 4
+USER STORY 4: Unique first Name
 package UserStory04;
 
-public class Junit {
-public String NoOfChildren (int Children)
-{
-	if (Children >= 25)
-		return ("Not Acceptable");
-	else
-		return ("Acceptable");
-}
-}
+from  filereader import OpenFile
 
-package UserStory04;
+flat_content = OpenFile.flat_content
 
-import static org.junit.Assert.*;
+class UniqueFirstName:
+    
+    Birthday = []
+    FirstName = []
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'NAME']: 
+        FirstName.append(flat_content[i+1])
+    
+    FirstName.pop(0)
+    
+    count1 = 0
+    while (count1 < len(FirstName)):
+        count2 = 0
+        while(count2 < len(FirstName)):
+            if(count1 != count2):
+                if(FirstName[count1] == FirstName[count2]):
+                    print "Not Possible"
+            count2 = 1 + count2
+        count1 = 1 + count1
+        
+print UniqueFirstName.FirstName
 
-import org.junit.Test;
-
-public class ChildTest {
-
-	@Test4
-	public void test() {
-		Junit test = new Junit();
-		String result = test.NoOfChildren(10);
-		assertEquals("Not Acceptable",result);
-	}
-
-}
-USER STORY 5
+USER STORY 5: Wrong Gender
 package test;
 
-public class Junit {
-	
-	public String married(int married_date, int remarried_date)
-	{
-		if(remarried_date < married_date)
-			return "NOT Acceptable";
-		else
-			return "Acceptable";
-	}
-	
-}
-package test;
-import static org.junit.Assert.*;
-import org.junit.Test;
-public class CompareTest {
-	@Test 5
-	public void test() {
-		Junit test = new Junit();
-		String result = test.married(2013, 2014);
-		assertEquals("NOT Acceptable",result);
-	}
+from  filereader import OpenFile
 
-}
+flat_content = OpenFile.flat_content
+
+class WrongMale:
+    
+    Male = []
+    Female = []
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'FAM']:
+        Male.append(flat_content[i+2])
+        Female.append(flat_content[i+5]) 
+        if(flat_content[i+5] == 'HUSB'):
+            print('SAME Gender NOT POSSIBLE')
+        elif(flat_content[i+5]== '_CURRENT'):
+            print(' NOT MARRIED')
+        else:
+            print('Gender DIFFERENT')
+            
+    print Male
+    print Female
 
