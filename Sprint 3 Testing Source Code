@@ -1,0 +1,153 @@
+USERSTORY 11: Every person must have gender
+
+
+
+USERSTORY 12: Everyone must have First name
+
+
+
+
+USERSTORY 13: Marriage before birth
+
+class OpenFile:
+    # Open the file using open function
+    file = open("family.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+
+flat_content = OpenFile.flat_content
+
+class MarriageBeforeBirth:
+    
+    i=0
+    j=0
+    Birthday = []
+    Marriageday = []
+    Individualcount = []
+    #find birth dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'BIRT']: 
+        Birthday.append(flat_content[i+5])
+        
+    #find marriage dates
+    for j in [j for j,y in enumerate(flat_content) if y == 'MARR']: 
+        Marriageday.append(flat_content[j+5])
+    
+    #count individuals dates
+    for p in [p for p,z in enumerate(flat_content) if z == 'INDI']: 
+        Individualcount.append('1')
+    
+    #fill the empty fields in Birth and marriage
+    for count in range(len(Birthday), len(Individualcount)):
+        Birthday.append('0')
+    
+    for count in range(len(Marriageday), len(Individualcount)):
+        Marriageday.append('0')
+    
+    #compare death dates with marriage dates
+    for k in range(0, len(Individualcount)):
+        if(Birthday[k] == '0' or Marriageday[k] == '0'):
+            k = k + 1
+        elif(Birthday[k] < Marriageday[k]):
+            print "Birth year is: "+Birthday[k]+" Marriage year is: "+Marriageday[k]+" Marriage is after birth year"
+            k = k + 1
+        else:
+            print "Birth year is: "+Birthday[k]+" Marriage year is: "+Marriageday[k]+" Marriage before birth is INVALID"
+            k = k + 1
+            
+            
+
+
+
+USERSTORY 14: Remarriage after spouse's death
+
+'''
+Created on Mar 24, 2015
+
+@author: DhruvilParikh
+'''
+class OpenFile:
+    # Open the file using open function
+    file = open("family_correct.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+flat_content = OpenFile.flat_content
+
+class MarriageWhileMarried:
+    
+    Marriage = []
+    checking = []
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'MARR']: 
+       Marriage.append(flat_content[i+7])
+    for i in [i for i,x in enumerate(flat_content) if x == 'MARR']: 
+       checking.append(flat_content[i+8])
+    
+    count = 0
+    while (count < len(Marriage)):
+        if(Marriage[count] == '_CURRENT' and checking[count] == 'Y'):
+            print "Spouse is ALIVE and not eligible to get remarried"
+        else:
+            print "Spouse is dead and eligible to get married"
+        count = count + 1;
+            
+    print Marriage
+    print checking
+    
+    
+USERSTORY 15: Marriage to a dead person
+
+class OpenFile:
+    # Open the file using open function
+    file = open("family.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+
+flat_content = OpenFile.flat_content
+
+class MarriageToDeadPerson:
+    
+    Deathday = []
+         
+    #find Birth dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'BIRT']: 
+        #Check for death dates
+        if(flat_content[i+7] == 'DEAT'):
+            Deathday.append(flat_content[i+13])
+            print "Person is already dead and nobody can marry to him/her."
+            
+        else:
+            Deathday.append('ALIVE')
+            print "Person is alive and anybody can marry to him/her."
+            
+print MarriageToDeadPerson.Deathday
+            
