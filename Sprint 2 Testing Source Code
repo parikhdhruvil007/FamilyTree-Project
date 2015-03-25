@@ -1,0 +1,216 @@
+USERSTORY 6: child Count
+class OpenFile:
+    #Open the file using open function
+    file = open("family_correct.ged","r")
+    
+    fname = file.name
+    
+    #Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    #Get rid of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+
+flat_content = OpenFile.flat_content
+
+class ChildCount:
+    
+    FamCount = 0
+    ChildCount = 0
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'WIFE']:
+        
+        for i in [i for i,x in enumerate(flat_content) if x == 'CHIL']:
+            
+            ChildCount = ChildCount +1 
+            
+    if (ChildCount > 25):
+        print "Too many Children in one family"
+    else:
+        print " Not too many childern per family"      
+        
+    FamCount = FamCount +1
+    
+print ChildCount.ChildCount 
+
+USERSTORY 7: Kids Before Marriage
+class OpenFile:
+    # Open the file using open function
+    file = open("family_correct.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+
+flat_content = OpenFile.flat_content
+
+class KidsBeforeMarriage:
+    
+    Wife = []
+    Marriage = []
+    
+       
+    for j in [j for j,y in enumerate(flat_content) if y == 'WIFE']: 
+       Wife.append(flat_content[j])
+       
+    for k in [k for k,z in enumerate(flat_content) if z == 'MARR']: 
+       Marriage.append(flat_content[k])
+    
+    for p in range(0, len(Wife)):
+        if(Wife[p] == 'WIFE' and Marriage[p] == 'MARR'):
+            p = p + 1;
+            print "Married and is eligible to have kids"
+        else:
+            print "Kids Before Marriage is not possible"
+            p = p + 1;
+            
+    print Wife
+    print Marriage
+
+USERSTORY 8:Marriage after Death
+class OpenFile:
+    # Open the file using open function
+    file = open("family_correct.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+
+flat_content = OpenFile.flat_content
+
+class MarriageAfterDeath:
+    
+    i=0
+    j=0
+    Deathday = []
+    Marriageday = []
+    Individualcount = []
+    #find marriage dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'DEAT']: 
+        Deathday.append(flat_content[i+6])
+        
+    #find marriage dates
+    for j in [j for j,y in enumerate(flat_content) if y == 'MARR']: 
+        Marriageday.append(flat_content[j+5])
+    
+    #count individuals dates
+    for p in [p for p,z in enumerate(flat_content) if z == 'INDI']: 
+        Individualcount.append('1')
+    
+    #fill the empty fields in death and marriage
+    for count in range(len(Deathday), len(Individualcount)):
+        Deathday.append('0')
+    
+    for count in range(len(Marriageday), len(Individualcount)):
+        Marriageday.append('0')
+    
+    #compare death dates with marriage dates
+    for k in range(0, len(Individualcount)):
+        if(Deathday[k] == '0' or Marriageday[k] == '0'):
+            k = k + 1
+        elif(Deathday[k] > Marriageday[k]):
+            print "Death date is: "+Deathday[k]+" Marriage date is: "+Marriageday[k]+" Marriage data is correct"
+            k = k + 1
+        else:
+            print "Death date is: "+Deathday[k]+" Marriage date is: "+Marriageday[k]+" Marriage data is INCORRECT"
+            k = k + 1
+
+USERSTORY 9: MArriage While Married
+
+class OpenFile:
+    # Open the file using open function
+    file = open("family_correct.ged", "r")
+    
+    fname = file.name
+
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    
+    file.close()
+flat_content = OpenFile.flat_content
+
+class MarriageWhileMarried:
+    
+    Marriage = []
+    
+    for i in [i for i,x in enumerate(flat_content) if x == 'MARR']: 
+       Marriage.append(flat_content[i+7])
+    
+    count = 0
+    while (count < len(Marriage)):
+        if(Marriage[count] == '_CURRENT'):
+            print "Marriage while married is not possible"
+        elif (Marriage[count] == 'DIV'):
+            print "Person is Divorsed and is eligible to get married"
+        else:
+            print "Person is never married"
+        count = count + 1;
+            
+    print Marriage
+    
+USERSTORY 10: Maximum Age of an Individual
+
+import time
+
+class OpenFile:
+    # Open the file using open function
+    file = open("family_correct.ged", "r")
+    fname = file.name
+    # Reading each line
+    with open(fname) as f:
+        content = file.readlines()
+    # Get read of \n that indicate a new line in the GED file
+    content = [x.strip('\n') for x in content]
+    content = [x.split() for x in content]
+    flat_content = [val for sublist in content for val in sublist]
+    file.close()
+flat_content = OpenFile.flat_content
+
+class MaximumAge:  
+    Birthday = []
+    Deathday = []
+    #find marriage dates
+    for i in [i for i,x in enumerate(flat_content) if x == 'BIRT']: 
+        Birthday.append(flat_content[i+5])
+        birthyear = int(flat_content[i+5])
+        yeartodate = int(time.strftime("%Y"))
+        if(flat_content[i+7] == 'DEAT'):
+            deathday = int(flat_content[i+13])
+            if(deathday - birthyear > 125):
+                print "Maximum Age Limit is 125 years."
+                Deathday.append(deathday)
+            else:
+                Deathday.append('Died at the age of ' + str(deathday - birthyear))
+        elif(yeartodate - birthyear > 125):
+            print "Has exceeded Maximum Age Limit of 125 years."
+            Deathday.append('Age is ' + str(deathday - birthyear) + ', which is above the limit')
+        else:
+            Deathday.append('ALIVE')
+
+print MaximumAge.Birthday
+print MaximumAge.Deathday
